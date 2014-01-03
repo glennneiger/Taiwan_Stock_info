@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #資產負債季表 cathaysec.moneydj.com/z/zc/zcp/zcpa/zcpa0_%s.djhtm
 #個股損益季表 cathaysec.moneydj.com/z/zc/zcq/zcq0_%s.djhtm
 #個股財務比率季表 cathaysec.moneydj.com/z/zc/zcr/zcr0_%s.djhtm
