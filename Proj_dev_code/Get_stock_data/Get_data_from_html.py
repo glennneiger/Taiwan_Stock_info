@@ -1,9 +1,149 @@
 # -*- coding: utf-8 -*-
-#資產負債季表 cathaysec.moneydj.com/z/zc/zcp/zcpa/zcpa0_%s.djhtm
-#個股損益季表 cathaysec.moneydj.com/z/zc/zcq/zcq0_%s.djhtm
+#=================================================================#
+#get formal html data
+#=================================================================#
+def get_formal_html_data (Stock_data):
+    # write files test
+    from bs4 import BeautifulSoup
+    soup = BeautifulSoup(Stock_data)
+    soup_formal = soup.prettify()
+    #get formal data format
+    Formal_data = open("Formal_data.txt", "wb")
+    Formal_data.write(soup_formal.encode("utf-8"))
+    Formal_data.close()
+    return 0
+#=================================================================#
+#=================================================================#
 #個股財務比率季表 cathaysec.moneydj.com/z/zc/zcr/zcr0_%s.djhtm
-#個股現金流量季表 cathaysec.moneydj.com/z/zc/zc3/zc30_%s.djhtm
+def company_quarter_financial_ratio_sheet  (company_number,company_name,date,basepath,folder_name):
+    Stock_page = urllib.request.urlopen('http://cathaysec.moneydj.com/z/zc/zcr/zcr0_%s.djhtm'%company_number)
+    Stock_data = Stock_page.read().decode('big5','ignore')
+    #print(Stock_data)
+    get_formal_html_data(Stock_data)
 
+    #print(basepath)
+    from bs4 import BeautifulSoup
+    directory = basepath+"/%s/%s/"%(date,folder_name)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    resouce_data = open("Formal_data.txt","rb")
+    parsing_data = open("%s/%s_%s.csv"%(directory,company_number,company_name),"w")
+    stock_input_data = BeautifulSoup(resouce_data.read().decode("utf-8"))
+    td_sum=""
+    #skip top three table
+    for table in stock_input_data.findAll("table")[1:-2]:
+        for tr in table.findAll("tr")[2:]:  
+            for td in tr.findAll("td"):
+                td_result = td.text.strip() #remove empty space
+                td_result = td_result.replace(',','')
+                td_sum = td_sum + td_result + ","           
+                #td_sum = td_sum.replace('\n',';')
+                #print(td.text)
+            print(td_sum)
+            parsing_data.write(td_sum+"\n")
+            td_sum="" #clear data   
+    #wait = input("PRESS ENTER TO CONTINUE.") #wait for input key
+    parsing_data.close()
+    return 0
+#=================================================================#
+#=================================================================#
+#個股損益季表 cathaysec.moneydj.com/z/zc/zcq/zcq0_%s.djhtm
+def company_quarter_income_statement_sheet  (company_number,company_name,date,basepath,folder_name):
+    Stock_page = urllib.request.urlopen('http://cathaysec.moneydj.com/z/zc/zcq/zcq0_%s.djhtm'%company_number)
+    Stock_data = Stock_page.read().decode('big5','ignore')
+    #print(Stock_data)
+    get_formal_html_data(Stock_data)
+
+    #print(basepath)
+    from bs4 import BeautifulSoup
+    directory = basepath+"/%s/%s/"%(date,folder_name)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    resouce_data = open("Formal_data.txt","rb")
+    parsing_data = open("%s/%s_%s.csv"%(directory,company_number,company_name),"w")
+    stock_input_data = BeautifulSoup(resouce_data.read().decode("utf-8"))
+    td_sum=""
+    #skip top three table
+    for table in stock_input_data.findAll("table")[2:]:
+        for tr in table.findAll("tr")[1:]:  
+            for td in tr.findAll("td"):
+                td_result = td.text.strip() #remove empty space
+                td_result = td_result.replace(',','')
+                td_sum = td_sum + td_result + ","           
+                #td_sum = td_sum.replace('\n',';')
+                #print(td.text)
+            print(td_sum)
+            parsing_data.write(td_sum+"\n")
+            td_sum="" #clear data   
+    #wait = input("PRESS ENTER TO CONTINUE.") #wait for input key
+    parsing_data.close()
+    return 0
+#=================================================================#
+#=================================================================#
+#資產負債季表 cathaysec.moneydj.com/z/zc/zcp/zcpa/zcpa0_%s.djhtm
+def company_balance_sheet  (company_number,company_name,date,basepath,folder_name):
+    Stock_page = urllib.request.urlopen('http://cathaysec.moneydj.com/z/zc/zcp/zcpa/zcpa0_%s.djhtm'%company_number)
+    Stock_data = Stock_page.read().decode('big5','ignore')
+    #print(Stock_data)
+    get_formal_html_data(Stock_data)
+
+    #print(basepath)
+    from bs4 import BeautifulSoup
+    directory = basepath+"/%s/%s/"%(date,folder_name)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    resouce_data = open("Formal_data.txt","rb")
+    parsing_data = open("%s/%s_%s.csv"%(directory,company_number,company_name),"w")
+    stock_input_data = BeautifulSoup(resouce_data.read().decode("utf-8"))
+    td_sum=""
+    #skip top three table
+    for table in stock_input_data.findAll("table")[2:]:
+        for tr in table.findAll("tr")[1:]:  
+            for td in tr.findAll("td"):
+                td_result = td.text.strip() #remove empty space
+                td_result = td_result.replace(',','')
+                td_sum = td_sum + td_result + ","           
+                #td_sum = td_sum.replace('\n',';')
+                #print(td.text)
+            print(td_sum)
+            parsing_data.write(td_sum+"\n")
+            td_sum="" #clear data   
+    #wait = input("PRESS ENTER TO CONTINUE.") #wait for input key
+    parsing_data.close()
+    return 0
+#=================================================================#
+#=================================================================#
+#個股現金流量季表 cathaysec.moneydj.com/z/zc/zc3/zc30_%s.djhtm
+def company_cash_flow  (company_number,company_name,date,basepath,folder_name):
+    Stock_page = urllib.request.urlopen('http://cathaysec.moneydj.com/z/zc/zc3/zc30_%s.djhtm'%company_number)
+    Stock_data = Stock_page.read().decode('big5','ignore')
+    #print(Stock_data)
+    get_formal_html_data(Stock_data)
+
+    #print(basepath)
+    from bs4 import BeautifulSoup
+    directory = basepath+"/%s/%s/"%(date,folder_name)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    resouce_data = open("Formal_data.txt","rb")
+    parsing_data = open("%s/%s_%s.csv"%(directory,company_number,company_name),"w")
+    stock_input_data = BeautifulSoup(resouce_data.read().decode("utf-8"))
+    td_sum=""
+    #skip top three table
+    for table in stock_input_data.findAll("table")[2:]:
+        for tr in table.findAll("tr")[1:-1]:  
+            for td in tr.findAll("td"):
+                td_result = td.text.strip() #remove empty space
+                td_result = td_result.replace(',','')
+                td_sum = td_sum + td_result + ","           
+                #td_sum = td_sum.replace('\n',';')
+                #print(td.text)
+            print(td_sum)
+            parsing_data.write(td_sum+"\n")
+            td_sum="" #clear data   
+    #wait = input("PRESS ENTER TO CONTINUE.") #wait for input key
+    parsing_data.close()
+    return 0
 #=================================================================#
 #=================================================================#
 #Distribution of shareholding
@@ -286,52 +426,74 @@ stock_names = open("stock_all.csv", "rb").read().decode('utf-8')
 company_readline = stock_names.split("\n")
 
 for company_number  in company_readline:
-    
+    '''
     #=================================================================#
     #  company_information
     #=================================================================#
     #print(company_number[:4])  #get company_number
     company_information(company_number[:4],company_number[5:],date,basepath,"basic_information")
-    time.sleep(5) #wait 2 seconds
+    time.sleep(3) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
-    
     #=================================================================#
     #  company_shareholding_distribution
     #=================================================================#
     #print(company_number[:4])  #get company_number
     company_shareholding_distribution(company_number[:4],company_number[5:],date,basepath,"shareholding_distribution")
-    time.sleep(5) #wait 2 seconds
+    time.sleep(3) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
-    
     #=================================================================#
     #  company_quarterly_revenue_report_no_merge
     #=================================================================#
     #print(company_number[:4])  #get company_number
     company_quarterly_revenue_report_no_merge(company_number[:4],company_number[5:],date,basepath,"quarter_revenue_no_merge")
-    time.sleep(5) #wait 2 seconds
+    time.sleep(3) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarterly_profit_report_merge
     #=================================================================#
     company_quarterly_profit_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_profit_merge")
-    time.sleep(5) #wait 2 seconds
+    time.sleep(3) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarterly_dividend_report_merge
     #=================================================================#
     company_quarterly_dividend_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_dividend_merge")
-    time.sleep(5) #wait 2 seconds
+    time.sleep(3) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
-    
-    
+    '''
     #=================================================================#
-    #  next function
+    #  cash flow
     #=================================================================#
+    company_cash_flow (company_number[:4],company_number[5:],date,basepath,"cash_flow")
+    time.sleep(3) #wait 2 seconds
+    #remove temp files
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
+    #=================================================================#
+    #  company_balance_sheet
+    #=================================================================#
+    company_balance_sheet (company_number[:4],company_number[5:],date,basepath,"balance_sheet")
+    time.sleep(3) #wait 2 seconds
+    #remove temp files
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
+    #=================================================================#
+    #  company_quarter_income_statement_sheet
+    #=================================================================#
+    company_quarter_income_statement_sheet(company_number[:4],company_number[5:],date,basepath,"quarter_income_sheet")
+    time.sleep(3) #wait 2 seconds
+    #remove temp files
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
+    #=================================================================#
+    # company_quarter_financial_ratio_sheet
+    #=================================================================#
+    company_quarter_financial_ratio_sheet(company_number[:4],company_number[5:],date,basepath,"quarter_financial_ratio_sheet")
+    time.sleep(3) #wait 2 seconds
+    #remove temp files
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
 
 
 #mrege cvs files
