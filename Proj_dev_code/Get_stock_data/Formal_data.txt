@@ -1,0 +1,121 @@
+document.writeln('
+<table border="0" cellpadding="1" cellspacing="1" class="t01" width="100%">
+ <tr>
+  <td class="t10" colspan="3">
+   (1225)籌碼分佈
+   <div class="t11">
+    日期:01/03
+   </div>
+  </td>
+ </tr>
+ <tr>
+  <td class="t2">
+  </td>
+  <td class="t2">
+   張數
+  </td>
+  <td class="t2">
+   佔股本比例
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   董監持股
+  </td>
+  <td class="t3n1">
+   29,968
+  </td>
+  <td class="t3n1">
+   15.21%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   外資持股
+  </td>
+  <td class="t3n1">
+   14,114
+  </td>
+  <td class="t3n1">
+   7.16%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   投信持股
+  </td>
+  <td class="t3n1">
+   1
+  </td>
+  <td class="t3n1">
+   0.00%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   自營商持股
+  </td>
+  <td class="t3n1">
+   0
+  </td>
+  <td class="t3n1">
+   0.00%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   法人合計
+  </td>
+  <td class="t3n1">
+   14,115
+  </td>
+  <td class="t3n1">
+   7.17%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   融資餘額
+  </td>
+  <td class="t3n1">
+   42,463
+  </td>
+  <td class="t3n1">
+   21.56%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   融券餘額
+  </td>
+  <td class="t3n1">
+   266
+  </td>
+  <td class="t3n1">
+   0.14%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   集保庫存
+  </td>
+  <td class="t3n1">
+   201,436
+  </td>
+  <td class="t3n1">
+   102.25%
+  </td>
+ </tr>
+ <tr>
+  <td class="t3n0">
+   六日均量
+  </td>
+  <td class="t3n1">
+   188
+  </td>
+  <td class="t3n1">
+   0.10%
+  </td>
+ </tr>
+</table>
+\n');

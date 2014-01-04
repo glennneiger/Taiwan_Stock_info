@@ -67,6 +67,7 @@ def company_information (company_number,company_name,date,basepath,folder_name):
 
     #print(basepath)
     directory = basepath+"/%s/%s/"%(date,folder_name)
+    #print(basepath)
     if not os.path.exists(directory):
         os.makedirs(directory)
     resouce_data = open("Formal_data.txt","rb")
@@ -191,7 +192,7 @@ def company_quarterly_revenue_report_no_merge (company_number,company_name,date,
     soup = BeautifulSoup(Stock_data)
     soup_formal = soup.prettify()
     #get formal data format
-    Formal_data = open("Formal_data.txt", "wb")
+    Formal_data = open("%s/Formal_data.txt"%os.getcwd(), "wb")
     Formal_data.write(soup_formal.encode("utf-8"))
     Formal_data.close()
 
@@ -270,19 +271,20 @@ import os
 import sys
 import xlwt3 as xlwt   #Excel file write
 import csv             #CSV file read/write
-import ctypes          #windows message
+#import ctypes          #windows message
 import time
 import datetime
 
-MessageBox = ctypes.windll.user32.MessageBoxW #python 3.x
+#MessageBox = ctypes.windll.user32.MessageBoxW #python 3.x
 #MessageBox(None, 'please wait till finish message', 'Merge', 0)
 
 now = datetime.datetime.now()
 date = "%s-%s-%s" % (now.year, now.month, now.day)
-basepath = os.path.dirname(__file__)+"/result"
+basepath = os.getcwd()+"/result"
 #get compayn list
 stock_names = open("stock_all.csv", "rb").read().decode('utf-8')
 company_readline = stock_names.split("\n")
+
 for company_number  in company_readline:
     
     #=================================================================#
@@ -292,7 +294,7 @@ for company_number  in company_readline:
     company_information(company_number[:4],company_number[5:],date,basepath,"basic_information")
     time.sleep(5) #wait 2 seconds
     #remove temp files
-    os.remove(os.path.dirname(__file__)+"/Formal_data.txt") #company_quarterly_report_no_merge
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     
     #=================================================================#
     #  company_shareholding_distribution
@@ -301,7 +303,7 @@ for company_number  in company_readline:
     company_shareholding_distribution(company_number[:4],company_number[5:],date,basepath,"shareholding_distribution")
     time.sleep(5) #wait 2 seconds
     #remove temp files
-    os.remove(os.path.dirname(__file__)+"/Formal_data.txt") #company_quarterly_report_no_merge
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     
     #=================================================================#
     #  company_quarterly_revenue_report_no_merge
@@ -310,21 +312,21 @@ for company_number  in company_readline:
     company_quarterly_revenue_report_no_merge(company_number[:4],company_number[5:],date,basepath,"quarter_revenue_no_merge")
     time.sleep(5) #wait 2 seconds
     #remove temp files
-    os.remove(os.path.dirname(__file__)+"/Formal_data.txt") #company_quarterly_report_no_merge
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarterly_profit_report_merge
     #=================================================================#
     company_quarterly_profit_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_profit_merge")
     time.sleep(5) #wait 2 seconds
     #remove temp files
-    os.remove(os.path.dirname(__file__)+"/Formal_data.txt") #company_quarterly_report_no_merge
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarterly_dividend_report_merge
     #=================================================================#
     company_quarterly_dividend_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_dividend_merge")
     time.sleep(5) #wait 2 seconds
     #remove temp files
-    os.remove(os.path.dirname(__file__)+"/Formal_data.txt") #company_quarterly_report_no_merge
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     
     
     #=================================================================#
