@@ -1,15 +1,15 @@
 import time
 from pymongo import MongoClient
-connection = MongoClient('10.19.132.51')
+connection = MongoClient('localhost')
 
-from g2algorithm.debug import *
+#from g2algorithm.debug import *
 
 
 def delete_data_from_collection( database, collection_name, cond, debug=0):
 
     collection = get_collection_from_mongo( database, collection_name )
     collection.remove( cond )
-    print "data removed"
+    print("data removed")
 
     return 0
 
@@ -46,7 +46,7 @@ def get_collection_from_mongo( database, collection  ):
     if collection in db.collection_names():
         output = db[ collection ]
     else:
-        print "create new collection %s in %s " % (collection, database)
+        print("create new collection %s in %s " % (collection, database))
         db.create_collection( collection )
         output = db[ collection ]
 
@@ -99,12 +99,12 @@ def get_data_from_collection_by_cond( database, collection, cond, debug=0 ):
 
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
 
-    database = "lipu_test"
+#    database = "lipu_test"
     #get_collection_from_mongo( database, "tasks"  )
-    collection = "tasks"
+#    collection = "tasks"
 
     '''
     tasks = get_data_from_collection_by_cond(database, collection, {'idProject' : 264} )
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     print get_data_from_collection_by_cond(database, collection, {'idToolchain' : {"$in" : [2, 5]}, 'idBenchmark' : 2000001 , 'set' : '', 'idTarget':13   } )
     '''
 
-    exit()
+#    exit()
 
 
 
