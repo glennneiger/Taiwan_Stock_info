@@ -1,7 +1,7 @@
 import time
 from pymongo import MongoClient
-connection = MongoClient('localhost')
-
+#connection = MongoClient('localhost')
+connection = MongoClient("mongodb://www.bi-xi.com:27017")
 #from g2algorithm.debug import *
 
 
@@ -40,9 +40,7 @@ def get_next_sequence_id(database, index, collection):
 
 def get_collection_from_mongo( database, collection  ):
 
-
     db = connection[database]
-
     if collection in db.collection_names():
         output = db[ collection ]
     else:
