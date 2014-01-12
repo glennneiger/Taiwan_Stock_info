@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#月營收 cathaysec.moneydj.com/z/zc/zch/zchb_1220.djhtm
 #=================================================================#
 #get formal html data
 #=================================================================#
@@ -12,6 +11,39 @@ def get_formal_html_data (Stock_data):
     Formal_data = open("Formal_data.txt", "wb")
     Formal_data.write(soup_formal.encode("utf-8"))
     Formal_data.close()
+    return 0
+#=================================================================#
+#=================================================================#
+#個股月營收 cathaysec.moneydj.com/z/zc/zch/zchb_1220.djhtm
+def company_monthly_revenue_report_no_merge  (company_number,company_name,date,basepath,folder_name):
+    Stock_page = urllib.request.urlopen('http://cathaysec.moneydj.com/z/zc/zch/zchb_%s.djhtm'%company_number)
+    Stock_data = Stock_page.read().decode('big5','ignore')
+    #print(Stock_data)
+    get_formal_html_data(Stock_data)
+
+    #print(basepath)
+    from bs4 import BeautifulSoup
+    directory = basepath+"/%s/%s/"%(date,folder_name)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    resouce_data = open("Formal_data.txt","rb")
+    parsing_data = open("%s/%s_%s.csv"%(directory,company_number,company_name),"w")
+    stock_input_data = BeautifulSoup(resouce_data.read().decode("utf-8"))
+    td_sum=""
+    #skip top three table
+    for table in stock_input_data.findAll("table")[2:]:
+        for tr in table.findAll("tr")[3:]:  
+            for td in tr.findAll("td"):
+                td_result = td.text.strip() #remove empty space
+                td_result = td_result.replace(',','')
+                td_sum = td_sum + td_result + ","           
+                #td_sum = td_sum.replace('\n',';')
+                #print(td.text)
+            print(td_sum)
+            parsing_data.write(td_sum+"\n")
+            td_sum="" #clear data   
+    #wait = input("PRESS ENTER TO CONTINUE.") #wait for input key
+    parsing_data.close()
     return 0
 #=================================================================#
 #=================================================================#
@@ -426,8 +458,7 @@ basepath = os.getcwd()+"/result"
 stock_names = open("stock_all.csv", "rb").read().decode('utf-8')
 company_readline = stock_names.split("\n")
 
-for company_number  in company_readline:
-    '''
+for company_number  in company_readline:    
     #=================================================================#
     #  company_information
     #=================================================================#
@@ -465,8 +496,7 @@ for company_number  in company_readline:
     company_quarterly_dividend_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_dividend_merge")
     time.sleep(3) #wait 2 seconds
     #remove temp files
-    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
-    '''
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge    
     #=================================================================#
     #  cash flow
     #=================================================================#
@@ -495,7 +525,13 @@ for company_number  in company_readline:
     time.sleep(3) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
-
+    #=================================================================#
+    # company_monthly_revenue_report_no_merge 
+    #=================================================================#
+    company_monthly_revenue_report_no_merge (company_number[:4],company_number[5:],date,basepath,"monthly_revenue_no_merge")
+    time.sleep(3) #wait 2 seconds
+    #remove temp files
+    os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
 
 #mrege cvs files
 #merge_cvs_files(basepath)
