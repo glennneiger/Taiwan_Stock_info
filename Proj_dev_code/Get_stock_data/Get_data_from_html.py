@@ -464,7 +464,7 @@ for company_number  in company_readline:
     #=================================================================#
     #print(company_number[:4])  #get company_number
     company_information(company_number[:4],company_number[5:],date,basepath,"basic_information")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
@@ -472,7 +472,7 @@ for company_number  in company_readline:
     #=================================================================#
     #print(company_number[:4])  #get company_number
     company_shareholding_distribution(company_number[:4],company_number[5:],date,basepath,"shareholding_distribution")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
@@ -480,56 +480,56 @@ for company_number  in company_readline:
     #=================================================================#
     #print(company_number[:4])  #get company_number
     company_quarterly_revenue_report_no_merge(company_number[:4],company_number[5:],date,basepath,"quarter_revenue_no_merge")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarterly_profit_report_merge
     #=================================================================#
     company_quarterly_profit_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_profit_merge")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarterly_dividend_report_merge
     #=================================================================#
     company_quarterly_dividend_report_merge(company_number[:4],company_number[5:],date,basepath,"quarter_dividend_merge")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge    
     #=================================================================#
     #  cash flow
     #=================================================================#
     company_cash_flow (company_number[:4],company_number[5:],date,basepath,"cash_flow")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     #  company_balance_sheet
     #=================================================================#
     company_balance_sheet (company_number[:4],company_number[5:],date,basepath,"balance_sheet")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     #  company_quarter_income_statement_sheet
     #=================================================================#
     company_quarter_income_statement_sheet(company_number[:4],company_number[5:],date,basepath,"quarter_income_sheet")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_quarter_financial_ratio_sheet
     #=================================================================#
     company_quarter_financial_ratio_sheet(company_number[:4],company_number[5:],date,basepath,"quarter_financial_ratio_sheet")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
     #=================================================================#
     # company_monthly_revenue_report_no_merge 
     #=================================================================#
     company_monthly_revenue_report_no_merge (company_number[:4],company_number[5:],date,basepath,"monthly_revenue_no_merge")
-    time.sleep(3) #wait 2 seconds
+    time.sleep(5) #wait 2 seconds
     #remove temp files
     os.remove(os.getcwd()+"/Formal_data.txt") #company_quarterly_report_no_merge
 
