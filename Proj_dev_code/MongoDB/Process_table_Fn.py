@@ -43,7 +43,8 @@ def Format2_creat_company_db(collection_name,company_number,company_name,file_da
     i=0
     j=0
     for row in file_data:
-        if row != "" :
+        if row != "" :        
+            row = row.replace("%","")
             j=0
             for item in row.split(","):
                 if item !="":
@@ -102,7 +103,8 @@ def Format4_creat_company_db(collection_name,company_number,company_name,file_da
     })
     for row in file_data[:-1]:
         if (row != ""):
-            print(row)
+            row = row.replace("%","")
+            #print(row)
             items = row.split(",")
             if (items[0]!=""):
                 db[collection_name].update(

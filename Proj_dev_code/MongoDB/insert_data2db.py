@@ -28,7 +28,7 @@ for folders in os.listdir(lasted_data):
     #=============================================================================#
     #below data table are same as Fomat1    #
     #=============================================================================#
-    
+    '''
     if folders == "cash_flow" :
         db[folders]
         for files in os.listdir(lasted_data+"/%s"%folders):
@@ -79,7 +79,7 @@ for folders in os.listdir(lasted_data):
             else : #creat 
                 Process_table_Fn.Format1_creat_company_db(folders,company_number,company_name,file_data.read().split("\n"))
             file_data.close()
-            
+    '''        
     #=============================================================================#
     #below data table are same as Fomat2    #
     #=============================================================================#
@@ -99,7 +99,7 @@ for folders in os.listdir(lasted_data):
             else : #creat 
                 Process_table_Fn.Format2_creat_company_db(folders,company_number,company_name,file_data.read().split("\n"),file_path)
             file_data.close()
-   
+    '''
     if folders == "quarter_dividend_merge" :
         db[folders]
         for files in os.listdir(lasted_data+"/%s"%folders):
@@ -171,7 +171,7 @@ for folders in os.listdir(lasted_data):
             else : #creat 
                 Process_table_Fn.Format3_creat_company_db(folders,company_number,company_name,file_data.read().split("\n"))
             file_data.close()
-    
+   
     
     #=============================================================================#
     #below data table are same as Fomat4    # format 1 like;  row table format
@@ -193,7 +193,7 @@ for folders in os.listdir(lasted_data):
             else : #creat 
                 Process_table_Fn.Format4_creat_company_db(folders,company_number,company_name,file_data.read().split("\n"))
             file_data.close()
-            
+         
     #=============================================================================#
     #below data table are same as Fomat4    # format 1 like;  row table format
     #=============================================================================#        
@@ -214,7 +214,7 @@ for folders in os.listdir(lasted_data):
             else : #creat 
                 Process_table_Fn.Format5_creat_company_db(folders,company_number,company_name,file_data.read().split("\n"))
             file_data.close()
-    
+    '''
     
     
     
