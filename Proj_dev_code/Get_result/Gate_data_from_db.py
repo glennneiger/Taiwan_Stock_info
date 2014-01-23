@@ -81,7 +81,7 @@ print("monthly_revenue_no_merge")
 print(monthly_revenue_no_merge_com_list)
 
            
-company_list =list(set(company_list) & set(quarter_financial_com_list))
+company_list =list(set(company_list) & set(monthly_revenue_no_merge_com_list))
 print(company_list)
 input("wait")
     

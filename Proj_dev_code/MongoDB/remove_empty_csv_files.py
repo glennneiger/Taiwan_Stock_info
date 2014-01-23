@@ -16,7 +16,9 @@ for folders in os.listdir(lasted_data):
         #print(files)
         file_path = lasted_data+"/%s"%folders+"/%s"%files
         #print(os.path.getsize(lasted_data+"/%s"%folders+"/%s"%files))
-        if os.path.getsize(file_path) == 0 :
+        #input(file_path)
+        #input("wait")
+        if os.path.getsize(file_path) <  100:
             print(files)
             os.remove(file_path)
         

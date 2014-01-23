@@ -57,7 +57,7 @@ def Format2_creat_company_db(collection_name,company_number,company_name,file_da
             i=i+1
             
     for line_data in temp_data:
-        print(line_data)
+        #print(line_data)
         db[collection_name].update(
             {"_id":company_number}, #find target
             {"$push" :{line_data[0]:line_data[1:-1]}}  #late item is empty; update target
@@ -80,7 +80,7 @@ def Format3_creat_company_db(collection_name,company_number,company_name,file_da
     })
     for row in file_data[:-1]:
         if ( (row != "") & (len(row.split(","))>2)):
-            print(row)
+            #print(row)
             items = row.split(",")
             db[collection_name].update(
                 {"_id":company_number}, #find target
@@ -132,7 +132,7 @@ def Format5_creat_company_db(collection_name,company_number,company_name,file_da
         if (row != ""):
             items = row.split(",")
             if(i==1 or i==3):    
-                print(row)      
+                #print(row)      
                 db[collection_name].update(
                     {"_id":company_number}, #find target
                     {"$push" :{items[0]:items[1]}}  #late item is empty; update target
@@ -150,7 +150,7 @@ def Format5_creat_company_db(collection_name,company_number,company_name,file_da
                     {"$push" :{items[6]:items[7]}}  #late item is empty; update target
                 )        
             if(i==2 or i==4 or i==5 or i==7 or i==8):
-                print(row)      
+                #print(row)      
                 db[collection_name].update(
                     {"_id":company_number}, #find target
                     {"$push" :{items[0]:items[1]}}  #late item is empty; update target
@@ -164,7 +164,7 @@ def Format5_creat_company_db(collection_name,company_number,company_name,file_da
                     {"$push" :{items[4]:items[5]}}  #late item is empty; update target
                 )        
             if(i==9 or i==10 or i==11):
-                print(row)      
+                #print(row)      
                 db[collection_name].update(
                     {"_id":company_number}, #find target
                     {"$push" :{items[0]:items[1]}}  #late item is empty; update target
