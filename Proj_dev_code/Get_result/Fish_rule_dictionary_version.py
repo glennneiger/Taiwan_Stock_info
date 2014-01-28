@@ -175,7 +175,7 @@ for com_total_data in quarter_income_sheet:
                 #print(com_total_data["_id"])
                 #print(operation_ratio)
                 #input("wait")
-                if(int(operation_ratio) > 80):                    
+                if(int(operation_ratio) > 70):                    
                     operation_ratio_list["%s"%str(com_total_data["_id"])] = "本業收入比:%.2f%%"%operation_ratio
                     #print(operation_ratio_list)
                     #input("key")
@@ -193,16 +193,16 @@ print(operation_ratio_list)
 # write files
 #===================================================================#
 Fish_result = open("Fish_result","w")
-Fish_result.write("ROE_com_list \n")
+Fish_result.write("\n ROE_com_list \n")
 for loop in ROE_com_list.items():
     Fish_result.write(str(loop))
-Fish_result.write("quarter_financial_com_list \n")
+Fish_result.write("\n quarter_financial_com_list \n")
 for loop in quarter_financial_com_list.items():
     Fish_result.write(str(loop))
-Fish_result.write("free_cash_list \n")
+Fish_result.write("\n free_cash_list \n")
 for loop in free_cash_list.items():
     Fish_result.write(str(loop))
-Fish_result.write("operation_ratio_list \n")
+Fish_result.write("\n operation_ratio_list \n")
 for loop in operation_ratio_list.items():
     Fish_result.write(str(loop))
     
@@ -227,14 +227,38 @@ OR_com_list = []
 for key in operation_ratio_list.keys():
     OR_com_list.append(str(key))
     
+#===================================================================#
+# get last result
+#===================================================================#
 company_list1 =list(set(ROE_check_com_list) & set(QFC_com_list))
 company_list2 =list(set(Free_cash_com_list) & set(OR_com_list))
 company_list3 =list(set(company_list1) & set(company_list2))
 
 company_list3.sort()
 print("final resut")
-print(company_list3) 
-    
+print(company_list3)     
+
+Fish_result_list = open("Fish_result_list.txt","w")
+Fish_result.write("\n========================================================")
+Fish_result.write("\nFish result")
+Fish_result.write("\n========================================================\n")
+for loop in company_list3:
+    Fish_result.write("%s,"%str(loop))
+    Fish_result_list.write("%s\n"%str(loop))
+Fish_result_list.close()
+
+#===================================================================#
+# print result informations.
+#===================================================================#
+for Fish_result_com_list in company_list3:
+    Fish_result.write("\n========================================================\n")
+    Fish_result.write("Company number : %s \n"%Fish_result_com_list)
+    Fish_result.write("%s \n"%ROE_com_list["%s"%Fish_result_com_list])
+    Fish_result.write("%s \n"%quarter_financial_com_list["%s"%Fish_result_com_list])
+    Fish_result.write("%s \n"%free_cash_list["%s"%Fish_result_com_list])
+    Fish_result.write("%s \n"%operation_ratio_list["%s"%Fish_result_com_list])
+    Fish_result.write("========================================================")
+
 Fish_result.close()
 
 input("wait key")

@@ -1,6 +1,7 @@
 import os
 import csv
 import pymongo
+import collections
 #client = pymongo.MongoClient("localhost", 27017)
 client = pymongo.MongoClient("mongodb://www.bi-xi.com:27017")
 #client = pymongo.MongoClient("mongodb://192.168.1.102:27017")
@@ -26,7 +27,7 @@ for com_total_data in quarter_financial_ratio_sheet:
 balance_sheet = db.balance_sheet.find()
 total_shareholder_equity =0
 total_operation_income=0
-ROE_com_list=[]
+ROE_com_list={}
 ROE=0
 i=0
 for com_total_data in balance_sheet:
@@ -52,10 +53,14 @@ for com_total_data in balance_sheet:
                 #print(ROE)    
                 #input("key")    
                 if(ROE > 8):
-                    ROE_com_list.append(str(com_total_data["_id"]))
+                    ROE_com_list["%s"%str(com_total_data["_id"])] ="ROE:%.2f"%ROE
+                    #ROE_com_list = collections.OrderedDict(sorted(ROE_com_list.items()))
                     #print(ROE_com_list)    
-
-ROE_com_list.sort()
+                    #input("wait key")
+                    #print(ROE_com_list["3443"])
+                    #input("wait key")
+                    
+ROE_com_list = collections.OrderedDict(sorted(ROE_com_list.items()))
 print(ROE_com_list)    
 #input("key")
 
@@ -63,26 +68,26 @@ print(ROE_com_list)
 #營益率＞0%
 #利息保障倍數＞40
 #===================================================================# 
-'''         
-quarter_financial_ratio_sheet = db.quarter_financial_ratio_sheet.find({
-                                                                      "利息保障倍數.0.0":{"$gt":"40"},
-                                                                      "利息保障倍數.0.1":{"$gt":"40"},
-                                                                      "利息保障倍數.0.2":{"$gt":"40"},
-                                                                      "利息保障倍數.0.3":{"$gt":"40"},
-                                                                      "營業利益率.0.0":{"$gt":"0"},
-                                                                      "營業利益率.0.1":{"$gt":"0"},
-                                                                      "營業利益率.0.2":{"$gt":"0"},
-                                                                      "營業利益率.0.3":{"$gt":"0"}
-                                                                      })
-quarter_financial_com_list = []
-for loop1 in quarter_financial_ratio_sheet:  
-    #print(loop1)
-    #input("wait")
-    quarter_financial_com_list.append(loop1["_id"])
-print(quarter_financial_com_list)
-'''            
+
+#quarter_financial_ratio_sheet = db.quarter_financial_ratio_sheet.find({
+#                                                                      "利息保障倍數.0.0":{"$gt":"40"},
+#                                                                      "利息保障倍數.0.1":{"$gt":"40"},
+#                                                                      "利息保障倍數.0.2":{"$gt":"40"},
+#                                                                      "利息保障倍數.0.3":{"$gt":"40"},
+#                                                                      "營業利益率.0.0":{"$gt":"0"},
+#                                                                      "營業利益率.0.1":{"$gt":"0"},
+#                                                                      "營業利益率.0.2":{"$gt":"0"},
+#                                                                      "營業利益率.0.3":{"$gt":"0"}
+#                                                                      })
+#quarter_financial_com_list = []
+#for loop1 in quarter_financial_ratio_sheet:  
+#    #print(loop1)
+#    #input("wait")
+#    quarter_financial_com_list.append(loop1["_id"])
+#print(quarter_financial_com_list)
+
 quarter_financial_ratio_sheet = db.quarter_financial_ratio_sheet.find()
-quarter_financial_com_list = []
+quarter_financial_com_list = {}
 for com_total_data in quarter_financial_ratio_sheet:    
     try:
         if(int(float(com_total_data["利息保障倍數"][0][0])) > 40 and 
@@ -93,15 +98,18 @@ for com_total_data in quarter_financial_ratio_sheet:
            int(float(com_total_data["營業利益率"][0][1])) > 0 and 
            int(float(com_total_data["營業利益率"][0][2])) > 0 and 
            int(float(com_total_data["營業利益率"][0][3])) > 0 ):
-            quarter_financial_com_list.append(com_total_data["_id"]) 
-            #print(com_total_data["_id"])
+            quarter_financial_com_list["%s"%str(com_total_data["_id"])] = ["利息保障倍數:%.2f"%float(com_total_data["利息保障倍數"][0][0]),
+                                                                       "營業利益率:%.2f"%float(com_total_data["營業利益率"][0][0])]
+            #print(com_total_data["_id"])            
+            #quarter_financial_com_list.sort()
+            #print(quarter_financial_com_list)
     except:
         pass
         #print("error")
         #print(com_total_data["_id"])
         #input("wait key")
-            
-quarter_financial_com_list.sort()
+        
+quarter_financial_com_list = collections.OrderedDict(sorted(quarter_financial_com_list.items()))            
 print(quarter_financial_com_list)
 
 #===================================================================#
@@ -110,7 +118,7 @@ print(quarter_financial_com_list)
 operation_cash=0
 investment_cash=0
 free_cash=0
-free_cash_list = []
+free_cash_list = {}
 i=0
 cash_flow_sheet = db.cash_flow.find()
 for com_total_data in cash_flow_sheet:    
@@ -132,9 +140,11 @@ for com_total_data in cash_flow_sheet:
                 #print(free_cash)
                 #input("wait")
                 if(free_cash>0):
-                    free_cash_list.append(com_total_data["_id"])
-
-free_cash_list.sort()             
+                    free_cash_list["%s"%str(com_total_data["_id"])] = "Free_cash: %d"%free_cash                                          
+                    #free_cash_list.sort()             
+                    #print(free_cash_list)  
+                    
+free_cash_list = collections.OrderedDict(sorted(free_cash_list.items()))            
 print(free_cash_list)  
 #input("key")
 
@@ -144,7 +154,7 @@ print(free_cash_list)
 #營業利益
 #營業外收入合計
 quarter_income_sheet = db.quarter_income_sheet.find()
-operation_ratio_list = []
+operation_ratio_list = {}
 for com_total_data in quarter_income_sheet:    
     operation_income=0
     investment_income=0
@@ -165,28 +175,90 @@ for com_total_data in quarter_income_sheet:
                 #print(com_total_data["_id"])
                 #print(operation_ratio)
                 #input("wait")
-                if(operation_ratio>80):
-                    operation_ratio_list.append(com_total_data["_id"])
+                if(int(operation_ratio) > 70):                    
+                    operation_ratio_list["%s"%str(com_total_data["_id"])] = "本業收入比:%.2f%%"%operation_ratio
                     #print(operation_ratio_list)
+                    #input("key")
     except:
         pass
         #print("key error")
         #print(com_total_data["_id"])
         #input("wait key")
         
-operation_ratio_list.sort()
+operation_ratio_list = collections.OrderedDict(sorted(operation_ratio_list.items()))  
 print(operation_ratio_list)
-
+#input("wait key")
 
 #===================================================================#
-# Check lsit 
+# write files
 #===================================================================#
-company_list1 =list(set(ROE_com_list) & set(quarter_financial_com_list))
-company_list2 =list(set(free_cash_list) & set(operation_ratio_list))
+Fish_result = open("Fish_result.txt","w")
+Fish_result.write("\n ROE_com_list \n")
+for loop in ROE_com_list.items():
+    Fish_result.write(str(loop))
+Fish_result.write("\n quarter_financial_com_list \n")
+for loop in quarter_financial_com_list.items():
+    Fish_result.write(str(loop))
+Fish_result.write("\n free_cash_list \n")
+for loop in free_cash_list.items():
+    Fish_result.write(str(loop))
+Fish_result.write("\n operation_ratio_list \n")
+for loop in operation_ratio_list.items():
+    Fish_result.write(str(loop))
+    
+        
+#===================================================================#
+# Check keys 
+#===================================================================#
+ROE_check_com_list=[]
+for key in ROE_com_list.keys():
+    ROE_check_com_list.append(str(key))
+    
+QFC_com_list=[]
+for key in quarter_financial_com_list.keys():
+    QFC_com_list.append(str(key))        
+
+Free_cash_com_list = []
+for key in free_cash_list.keys():
+    Free_cash_com_list.append(str(key))
+
+
+OR_com_list = []
+for key in operation_ratio_list.keys():
+    OR_com_list.append(str(key))
+    
+#===================================================================#
+# get last result
+#===================================================================#
+company_list1 =list(set(ROE_check_com_list) & set(QFC_com_list))
+company_list2 =list(set(Free_cash_com_list) & set(OR_com_list))
 company_list3 =list(set(company_list1) & set(company_list2))
 
 company_list3.sort()
 print("final resut")
-print(company_list3) 
-input("key")
+print(company_list3)     
+
+Fish_result.write("\n========================================================")
+Fish_result.write("\nFish result")
+Fish_result.write("\n========================================================\n")
+Fish_result_list = open("Fish_result_list.txt","w")
+for loop in company_list3:
+    Fish_result.write("%s,"%str(loop))
+    Fish_result_list.write("%s\n"%str(loop))
+Fish_result_list.close()
+#===================================================================#
+# print result informations.
+#===================================================================#
+for Fish_result_com_list in company_list3:
+    Fish_result.write("\n========================================================\n")
+    Fish_result.write("Company number : %s \n"%Fish_result_com_list)
+    Fish_result.write("%s \n"%ROE_com_list["%s"%Fish_result_com_list])
+    Fish_result.write("%s \n"%quarter_financial_com_list["%s"%Fish_result_com_list])
+    Fish_result.write("%s \n"%free_cash_list["%s"%Fish_result_com_list])
+    Fish_result.write("%s \n"%operation_ratio_list["%s"%Fish_result_com_list])
+    Fish_result.write("========================================================")
+
+Fish_result.close()
+print("complete")
+#input("wait key")
                
